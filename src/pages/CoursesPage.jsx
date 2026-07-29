@@ -26,13 +26,78 @@ const SAMPLE_COURSES = [
 ];
 
 export default function CoursesPage() {
+  const courses = SAMPLE_COURSES;
+
   // TODO S3.1 — build the static page (search input + table)
   // TODO S4.1 — load real courses from the API
   // TODO S4.2 — wire the search input to ?search=
   return (
     <section>
-      <h2 className="mb-4 text-lg font-semibold text-slate-800">Courses</h2>
-      <p className="text-sm text-slate-500">TODO: build the Courses page here.</p>
+      <h2 className="mb-4 text-lg font-semibold text-slate-800">
+        Courses
+      </h2>
+
+      {/* Search Input */}
+      <input
+        type="text"
+        placeholder="Search courses..."
+        className="
+          mb-4 w-full rounded-md border border-slate-300 
+          px-4 py-2 text-sm
+          focus:border-blue-500 focus:outline-none focus:ring-2 
+          focus:ring-blue-200
+        "
+      />
+
+      {/* Courses Table */}
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse border border-slate-300">
+          <thead>
+            <tr className="bg-slate-100 text-left text-sm text-slate-700">
+              <th className="border border-slate-300 px-4 py-2">ID</th>
+              <th className="border border-slate-300 px-4 py-2">Name</th>
+              <th className="border border-slate-300 px-4 py-2">Fee</th>
+              <th className="border border-slate-300 px-4 py-2">Seats</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {courses.map((course) => (
+              <tr
+                key={course.id}
+                className="even:bg-slate-50 hover:bg-slate-100"
+              >
+                <td className="border border-slate-300 px-4 py-2">
+                  {course.id}
+                </td>
+
+                <td className="border border-slate-300 px-4 py-2">
+                  {course.name}
+                </td>
+
+                <td className="border border-slate-300 px-4 py-2">
+                  ${course.fee}
+                </td>
+
+                <td className="border border-slate-300 px-4 py-2">
+                  <span
+                    className={`
+                      rounded-full px-3 py-1 text-xs font-medium
+                      ${
+                        course.seatsAvailable > 0
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-red-100 text-red-700'
+                      }
+                    `}
+                  >
+                    {course.seatsAvailable}/{course.seatsTotal}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 }
